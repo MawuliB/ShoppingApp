@@ -1,6 +1,9 @@
 import React from "react";
-import { View, Text, FlatList, TouchableOpacity, Dimensions, StyleSheet } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Dimensions, StyleSheet, Image } from "react-native";
 import { Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
+import { NavigationContext, useNavigation } from '@react-navigation/native';
+
+import Items from "./Items";
 
 const { width, height } = Dimensions.get('window')
 
@@ -8,14 +11,17 @@ const DATA = [
   {
     id: '1',
     title: 'All',
+    next: 'About'
   },
   {
     id: '2',
     title: 'RoadBike',
+    next: 'About'
   },
   {
     id: '3',
     title: 'Mountain',
+    next: 'About'
   },
   {
     id: '4',
@@ -25,23 +31,27 @@ const DATA = [
   {
     id: '5',
     title: 'Buzanga',
+    next: 'About'
   },
 ];
 
 
-const Item = ({ title }) => (
-  <TouchableOpacity style={styles.item}>
+const Item = ({ title, next, navigation}) => (
+  <TouchableOpacity style={styles.item} onPress={() => navigation.navigate(next)}>
       <Text style={styles.title}>{title}</Text>
   </TouchableOpacity>
 
 );
 
-const renderItem = ({ item }) => (
-  <Item title={item.title} />
+const renderItem = ({ item, navigation }) => (
+  <Item title={item.title} next={item.next}/>
 );
 
 
+
 export default function homeScreen(params) {
+  const navigation = params.navigation;
+  
   return (
     <View
       style={styles.main}
@@ -63,14 +73,19 @@ export default function homeScreen(params) {
         <Text style={{paddingTop: 10, fontWeight: "bold", fontSize: 15}}>Categories</Text>
       </View>
 
+     
       <FlatList
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         horizontal
-        pagingEnabled
-        scrollEnabled
+        showsHorizontalScrollIndicator={false}
+        
+        //pagingEnabled
+        //scrollEnabled
         />
+      
+      <Items/>
 
     </View>
   );
@@ -82,6 +97,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 55,
     paddingHorizontal: 20,
+    justifyContent: "space-evenly",
+
   },
   top: {
     flexDirection: "row",
@@ -91,7 +108,7 @@ const styles = StyleSheet.create({
   item: {
         flex: 1,
         paddingHorizontal: 8,
-        width: 'auto',
+        width: "auto",
         height: height * 0.04,
         backgroundColor: 'whitesmoke',
         margin: 10,
@@ -101,12 +118,15 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 3,
         elevation: 5,
-        alignSelf: "flex-start"
+        alignSelf: "flex-start",
   },
   title: {
     fontSize: 15,
     alignSelf: "center",
     justifyContent: "center"
   },
+flatlist: {
+  justifyContent: "space-between"
+}
        
 })
