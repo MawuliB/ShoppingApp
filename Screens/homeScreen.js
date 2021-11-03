@@ -1,45 +1,23 @@
-import React from "react";
-import { View, Text, FlatList, TouchableOpacity, Dimensions, StyleSheet, Image } from "react-native";
-import { Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
+import React from 'react';
+import { ScrollView, View, Text, FlatList, TouchableOpacity, Pressable, Dimensions, StyleSheet, Image} from 'react-native';
+import { Button, Drawer, List, WhiteSpace } from '@ant-design/react-native';
+import { Ionicons, FontAwesome, AntDesign, MaterialIcons } from "@expo/vector-icons";
+import SafeAreaView from 'react-native-safe-area-context'
+
 import { NavigationContext, useNavigation } from '@react-navigation/native';
 
-import Items from "./Items";
+import Items from "../components/Items";
 
 const { width, height } = Dimensions.get('window')
 
-const DATA = [
-  {
-    id: '1',
-    title: 'All',
-    next: 'About'
-  },
-  {
-    id: '2',
-    title: 'RoadBike',
-    next: 'About'
-  },
-  {
-    id: '3',
-    title: 'Mountain',
-    next: 'About'
-  },
-  {
-    id: '4',
-    title: 'Urban',
-    next: 'About'
-  },
-  {
-    id: '5',
-    title: 'Buzanga',
-    next: 'About'
-  },
-];
-
+import { Categories }  from '../Data/ProductData'
 
 const Item = ({ title, next, navigation}) => (
-  <TouchableOpacity style={styles.item} onPress={() => navigation.navigate(next)}>
+  
+  <TouchableOpacity style={styles.item} onPress={() => this.props.navigation.navigate('description')}>
       <Text style={styles.title}>{title}</Text>
   </TouchableOpacity>
+  
 
 );
 
@@ -48,22 +26,125 @@ const renderItem = ({ item, navigation }) => (
 );
 
 
-
-export default function homeScreen(params) {
-  const navigation = params.navigation;
+export default class homeScreen extends React.Component {
   
-  return (
-    <View
+  constructor() {
+    super(...arguments);
+    this.onOpenChange = isOpen => {
+      /* tslint:disable: no-console */
+      console.log('是否打开了 Drawer', isOpen.toString());
+    };
+  }
+  render() {
+    const itemArr = Array.apply(null, Array(5))
+      .map(function(_, i) {
+        return i;
+      })
+      .map((_i, index) => {
+        if (index === 0) {
+          return (
+            <List.Item
+              key={index}
+
+              style={{}}
+              multipleLine
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: 50,
+                  marginTop: 50,
+
+
+                }}
+              >
+                <Image style={{ height: 50, width: 50, borderRadius: 50 }} source={{uri: "https://scontent.facc8-1.fna.fbcdn.net/v/t1.6435-9/137227368_3572206719539558_5987327469211060924_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFTAlKB5hlclK1R6kQMPaIYcmNCF8lcws9yY0IXyVzCz9c2EhhFtffDF3brBYJkQuuGxIHeWkxovG1uJzc5gpIq&_nc_ohc=bu1_1pcnrmkAX_C8-8a&_nc_ht=scontent.facc8-1.fna&oh=3e216d7c7a4492c2d4e4a626183bca0c&oe=61A5B823"}} />
+                <Text style={{ fontSize: 20, marginLeft: 60, position: 'absolute' }}>Profile</Text>
+                <View style={{ alignItems: 'flex-end', }} >
+                <AntDesign name='closecircle' size={20} onPress={() => this.drawer.closeDrawer()}/>
+                </View>
+              </View>
+            </List.Item>
+          );
+        } else if (index === 1) {
+          return (
+            <List.Item
+              key={index}
+            >
+              <View style={{ flexDirection: 'row', }} > 
+                <AntDesign name='shoppingcart' size={20} />
+              <Text style={{marginLeft: 30, position: 'absolute'}} >Cart</Text>
+              </View>
+              
+            </List.Item>
+          );
+        }  else if (index === 2) {
+          return (
+            <List.Item
+              key={index}
+            >
+              <View style={{ flexDirection: 'row', }} > 
+              <MaterialIcons name='favorite' size={20} color={'red'} />
+              <Text style={{marginLeft: 30, position: 'absolute'}} >Favourite</Text>
+              </View>
+
+            </List.Item>
+          );
+        }  else if (index === 3) {
+          return (
+            <List.Item
+              key={index}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'flex-end', marginTop: width - 50}} > 
+                <AntDesign name='setting' size={20} />
+              <Text style={{marginLeft: 30, position: 'absolute'}} >Settings</Text>
+              </View>
+
+            </List.Item>
+          );
+        }
+
+      });
+    // Todo: https://github.com/DefinitelyTyped/DefinitelyTyped
+    const sidebar = (
+      <ScrollView style={[styles.container]}>
+        <List>{itemArr}</List>
+      </ScrollView>
+    );
+    
+    return (
+      <Drawer
+        sidebar={sidebar}
+        position="left"
+        open={false}
+        drawerRef={el => (this.drawer = el)}
+        onOpenChange={this.onOpenChange}
+        drawerBackgroundColor="white"
+        drawerWidth={width / 1.5}
+      >
+<View
       style={styles.main}
     >
       <View
         style={styles.top}
       >
-        <Ionicons name="ios-menu-outline" size={24} color="black" />
+        <Pressable onPress={() => this.drawer && this.drawer.openDrawer()}>
+        <Ionicons name="ios-menu-outline" size={24} color="black">
+        </Ionicons>
+        </Pressable>
+
+        <Pressable onPress={() => this.props.navigation.navigate("home")} >
         <FontAwesome name="motorcycle" size={24} color="black" />
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+        </Pressable>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Pressable>
           <AntDesign name="search1" size={20} color="black" />
+          </Pressable>
+          <Pressable>
           <Ionicons name="notifications-outline" size={20} color="black" />
+          </Pressable>
         </View>
       </View>
       <View style={{paddingTop: 15, paddingLeft: 5}}>
@@ -73,9 +154,9 @@ export default function homeScreen(params) {
         <Text style={{paddingTop: 10, fontWeight: "bold", fontSize: 15}}>Categories</Text>
       </View>
 
-     
+      <View style={{ marginBottom: 15 }}>
       <FlatList
-        data={DATA}
+        data={Categories}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         horizontal
@@ -84,14 +165,21 @@ export default function homeScreen(params) {
         //pagingEnabled
         //scrollEnabled
         />
-      
+        </View>
+        
       <Items/>
-
+      
     </View>
-  );
+    </Drawer>
+
+    );
+  }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   main: {
     backgroundColor: "white",
     flex: 1,

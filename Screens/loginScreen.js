@@ -16,7 +16,7 @@ export default function loginScreen(params) {
         }}
       />
       <Text style={{ fontSize: 30, color: "grey" }}>Welcome to</Text>
-      <Text style={{ fontSize: 40, fontWeight: "bold" }}>Power Bike Shop</Text>
+      <Text style={{ fontSize: 37, fontWeight: "bold" }}>Mawuli's Bike Shop</Text>
       
 
 <TouchableOpacity
