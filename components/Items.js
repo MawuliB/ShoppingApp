@@ -11,7 +11,7 @@ import  { Products } from '../Data/ProductData'
  
 export default function Items() {
   const [modalVisible, setModalVisible] = useState(false);
-  const key = ''
+
   const des = '';
 
   const newAssign = () => {
@@ -22,7 +22,6 @@ export default function Items() {
         const des = description;
   }
 
-  
 
   const Item1 = ({ title, image, description, id }) => (
 
