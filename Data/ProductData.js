@@ -3,10 +3,11 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 export const Products = [
+    
     {
       id: '1',
       title: 'Mx 36',
-      description: '',
+      description: 'Testing',
       image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmljeWNsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'
     },
     {

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Pressable, View, Text, FlatList, TouchableOpacity, Dimensions, StyleSheet, Image, Modal } from "react-native";
 import { Ionicons, FontAwesome, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
-import { AsyncStorage } from "react-native";
 
 const { width, height } = Dimensions.get('window')
 
@@ -12,16 +11,15 @@ import  { Products } from '../Data/ProductData'
 export default function Items() {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const des = '';
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalDescription, setModalDescription] = useState('');
+  
+  const setData = (title, description) => {
+      setModalVisible(true)
+      setModalTitle(title)
+      setModalDescription(description)
 
-  const newAssign = () => {
-    const des = ""
   }
-
-  const assign = (description) => {
-        const des = description;
-  }
-
 
   const Item1 = ({ title, image, description, id }) => (
 
@@ -30,6 +28,7 @@ export default function Items() {
         animationType="fade"
         transparent={true}
         visible={modalVisible}
+        key={id}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
@@ -38,18 +37,21 @@ export default function Items() {
         <View style={styles.centeredView}>
           <View style={[styles.button, styles.buttonClose]} >
         <Pressable
-              onPress={() => {setModalVisible(!modalVisible); newAssign() }}
+              onPress={() => setModalVisible(!modalVisible)}
             >
               <Ionicons name="close" size={35} />
             </Pressable>
             </View>
             <View>
-              <Text> {des} </Text>
+              <Text> {modalTitle} </Text>
+            </View>
+            <View>
+              <Text> {modalDescription} </Text>
             </View>
         </View>
 
       </Modal>
-    <TouchableOpacity onPress={() => {setModalVisible(true); assign(description)}} style={styles.container}>
+    <TouchableOpacity onPress={() => setData(title, description) } style={styles.container}>
       <Image style={styles.containerImage} source={{uri: image}} />
         <Text style={styles.textView}>{title}</Text>
     </TouchableOpacity>
