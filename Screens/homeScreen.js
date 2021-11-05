@@ -28,13 +28,6 @@ const renderItem = ({ item, navigation }) => (
 
 export default class homeScreen extends React.Component {
   
-  constructor() {
-    super(...arguments);
-    this.onOpenChange = isOpen => {
-      /* tslint:disable: no-console */
-      console.log('是否打开了 Drawer', isOpen.toString());
-    };
-  }
   render() {
     const itemArr = Array.apply(null, Array(5))
       .map(function(_, i) {

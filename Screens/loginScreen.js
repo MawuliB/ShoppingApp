@@ -1,7 +1,10 @@
 import React from "react";
-import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Platform } from "react-native";
+
+const { width, height } = Dimensions.get('window')
 
 export default function loginScreen(params) {
   const navigation = params.navigation;
@@ -12,12 +15,21 @@ export default function loginScreen(params) {
       <Image
         style={styles.image}
         source={{
-          uri: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/allbikes-1539286251.jpg?crop=0.880xw:1.00xh;0.0561xw,0&resize=1600:*",
+          uri: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/koenigsegg-gemera-101-1583247403.jpg?crop=1xw:1xh;center,top&resize=480:*",
         }}
       />
       <Text style={{ fontSize: 30, color: "grey" }}>Welcome to</Text>
-      <Text style={{ fontSize: 37, fontWeight: "bold" }}>Mawuli's Bike Shop</Text>
+      <Text style={{ fontSize: 37, fontWeight: "bold" }}>Mawuli's Car Shop</Text>
       
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("loginForm");
+        }}
+        style={styles.login0}
+      >
+        <AntDesign name="login" size={24} color="black" />
+        <Text style={{ paddingLeft: 30, color: "black", fontSize: 20 }}>Login</Text>
+      </TouchableOpacity>
 
 <TouchableOpacity
         onPress={() => {
@@ -29,7 +41,7 @@ export default function loginScreen(params) {
         source={{uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png"}}
         style={{width: 24, height: 24}}
         />
-        <Text style={{ paddingLeft: 10, color: "red" }}>Login with Gmail</Text>
+        <Text style={{ paddingLeft: 10, color: "red", fontSize: 15 }}>Login with Gmail</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -39,7 +51,7 @@ export default function loginScreen(params) {
         style={styles.login1}
       >
         <AntDesign name="apple1" size={24} color="white" />
-        <Text style={{ paddingLeft: 10, color: "white" }}>Login with Apple</Text>
+        <Text style={{ paddingLeft: 10, color: "white", fontSize: 15 }}>Login with Apple</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("register")} >
       <Text style={{color: "gainsboro", paddingTop: 15,  }}>
@@ -62,12 +74,13 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "45deg" }],
     borderRadius: 20,
     marginBottom: 60,
-    width: 200,
-    height: 200,
+    width: width > 320 ? 200: 160 ,
+    height: height > 600 ? 200: 160,
   },
   login: {
-    padding: 15,
-    paddingHorizontal: 80,
+    height: height/ 10,
+    width: Platform.OS === 'ios' || 'android'? width/ 1.2: 100,
+    justifyContent: 'center',
     marginTop: 10,
     alignItems: "center",
     borderRadius: 10,
@@ -76,13 +89,25 @@ const styles = StyleSheet.create({
     
   },
   login1: {
-    padding: 15,
-    paddingHorizontal: 80,
+    height: height/ 10,
+    width: Platform.OS === 'ios' || 'android'? width/ 1.2: 100,
+    justifyContent: 'center',
     marginTop: 10,
     alignItems: "center",
     borderRadius: 10,
     flexDirection: "row",
     backgroundColor: "black",
+    
+  },
+  login0: {
+    height: height/ 10,
+    width: Platform.OS === 'ios' || 'android'? width/ 1.2: 100,
+    justifyContent: 'center',
+    marginTop: 10,
+    alignItems: "center",
+    borderRadius: 10,
+    flexDirection: "row",
+    backgroundColor: "cornsilk",
     
   }
 

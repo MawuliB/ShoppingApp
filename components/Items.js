@@ -13,15 +13,37 @@ export default function Items() {
 
   const [modalTitle, setModalTitle] = useState('');
   const [modalDescription, setModalDescription] = useState('');
+  const [modalColor, setModalColor] = useState(['']);
+  const [modalImages, setModalImages] = useState(['']);
+  const [modalCategory, setModalCategory] = useState('');
+  const [modalPrice, setModalPrice] = useState('');
   
-  const setData = (title, description) => {
+  const setData = (title, description, colors, extraImages, category, price) => {
       setModalVisible(true)
       setModalTitle(title)
       setModalDescription(description)
+      setModalColor(colors)
+      setModalImages(extraImages)
+      setModalCategory(category)
+      setModalPrice(price)
 
   }
 
+  const Item = ({ extraImages }) => (
+    <Pressable style={styles.item}  >
+        <Image
+        source={{uri: extraImages}}
+        />
+    </Pressable>
+
+);
+
+const renderItem = ({ item }) => (
+  <Item extraImages={modalImages} />
+);
+
   const Item1 = ({ title, image, description, id }) => (
+
 
     <View>
       <Modal
@@ -29,10 +51,6 @@ export default function Items() {
         transparent={true}
         visible={modalVisible}
         key={id}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
       >
         <View style={styles.centeredView}>
           <View style={[styles.button, styles.buttonClose]} >
@@ -46,12 +64,24 @@ export default function Items() {
               <Text> {modalTitle} </Text>
             </View>
             <View>
+              <Text> {modalCategory} </Text>
+            </View>
+            <View>
+              <Text> {modalPrice} </Text>
+            </View>
+            <FlatList
+              data={modalImages}
+              renderItem={renderItem}
+              horizontal
+              scrollEnabled
+            />
+            <View>
               <Text> {modalDescription} </Text>
             </View>
         </View>
 
       </Modal>
-    <TouchableOpacity onPress={() => setData(title, description) } style={styles.container}>
+    <TouchableOpacity onPress={() => setData(title, description,  ) } style={styles.container}>
       <Image style={styles.containerImage} source={{uri: image}} />
         <Text style={styles.textView}>{title}</Text>
     </TouchableOpacity>
@@ -60,7 +90,7 @@ export default function Items() {
   );
   
   const renderItem1 = ({ item }) => (
-    <Item1 title={item.title} image={item.image} description={item.description} id={item.id}/>
+    <Item1 title={item.title} image={item.image} description={item.description} id={item.id} colors={item.colors} extraImages={item.extraImages} category={item.category} price={item.price}/>
   );
 
     return (
@@ -163,5 +193,23 @@ const styles = StyleSheet.create({
     modalText: {
       marginBottom: 15,
       textAlign: "center"
-    }
+    },
+    item: {
+        flex: 1,
+        width: width - 20,
+        height: height / 5,
+        backgroundColor: 'white',
+        margin: 10,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0.5, height: 0.5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        elevation: 5,
+        justifyContent: "center",
+      },
+      title: {
+        fontSize: 32,
+        alignSelf: "center"
+      },
 })
