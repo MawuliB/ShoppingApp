@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, FlatList, TouchableOpacity, Pressable, Dimensions, StyleSheet, Image} from 'react-native';
 import { Button, Drawer, List, WhiteSpace } from '@ant-design/react-native';
 import { Ionicons, FontAwesome, AntDesign, MaterialIcons } from "@expo/vector-icons";
@@ -12,17 +12,17 @@ const { width, height } = Dimensions.get('window')
 
 import { Categories }  from '../Data/ProductData'
 
-const Item = ({ title, next, navigation}) => (
-  
-  <TouchableOpacity style={styles.item} onPress={() => this.props.navigation.navigate('description')}>
-      <Text style={styles.title}>{title}</Text>
+
+const Item = ({ Category }) => (
+
+  <TouchableOpacity style={styles.item} >
+      <Text style={styles.title}>{Category.title}</Text>
   </TouchableOpacity>
   
-
 );
 
-const renderItem = ({ item, navigation }) => (
-  <Item title={item.title} next={item.next}/>
+const renderItem = ({ item }) => (
+  <Item Category={item}/>
 );
 
 
@@ -142,7 +142,7 @@ export default class homeScreen extends React.Component {
       </View>
       <View style={{paddingTop: 15, paddingLeft: 5}}>
         <Text style={{fontSize: 15, fontWeight: "bold", color: "grey"}}>The World's 
-          <Text style={{color: "orange", fontSize: 20}} > Best Bike</Text>
+          <Text style={{color: "orange", fontSize: 20}} > Best Cars</Text>
         </Text>
         <Text style={{paddingTop: 10, fontWeight: "bold", fontSize: 15}}>Categories</Text>
       </View>
@@ -192,6 +192,21 @@ const styles = StyleSheet.create({
         width: "auto",
         height: height * 0.04,
         backgroundColor: 'whitesmoke',
+        margin: 10,
+        borderRadius: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0.5, height: 0.5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        elevation: 5,
+        alignSelf: "flex-start",
+  },
+  itemSelected: {
+    flex: 1,
+        paddingHorizontal: 9,
+        width: "auto",
+        height: height * 0.05,
+        backgroundColor: 'orange',
         margin: 10,
         borderRadius: 5,
         shadowColor: '#000',
