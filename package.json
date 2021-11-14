@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@ant-design/react-native": "^4.2.0",
+    "@react-native-async-storage/async-storage": "^1.15.11",
+    "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@types/react": "^17.0.34",
@@ -23,6 +25,8 @@
     "react-dom": "17.0.1",
     "react-hook-form": "^7.18.1",
     "react-native": "0.64.2",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
     "react-native-simple-toast": "^1.1.3",

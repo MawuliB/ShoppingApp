@@ -4,7 +4,7 @@ export const Products = [
     {
       id: '1',
       title: 'Beast',
-      description: 'Color: Red\n B-pillar (between the front and rear windows) that supports the roof\ntwo rows of seats[7]: 134\na three-box design with the engine at the front and the cargo area at the rear\na less steeply sloping roofline than a coupé, which results in increased headroom for rear passengers and a less sporting appearance.',
+      description: 'Color: Red\nB-pillar (between the front and rear windows) that supports the roof\ntwo rows of seats[7]: 134\na three-box design with the engine at the front and the cargo area at the rear\na less steeply sloping roofline than a coupé, which results in increased headroom for rear passengers and a less sporting appearance.',
       categories: 'Sedan',
       price: '$100',
       extraImages: [
@@ -223,7 +223,7 @@ export const Products = [
       colors: [
         'Red',
       ],
-      description: "Colors: Red\nSpeed: 200m/h\nSeats: four\n200 power engine\nFlat Bottom",
+      description: "\n\tColors: Red\nSpeed: 200m/h\nSeats: four\n200 power engine\nFlat Bottom",
       image: 'https://image.shutterstock.com/image-photo/felixstowe-suffolk-england-august-27-260nw-482239000.jpg'
     },
     {
@@ -259,7 +259,7 @@ export const Products = [
         'Red',
         'Yellow'
       ],
-      description: "Colors: Red, Yellow\nSpeed: 300m/h\nSeats: four\n300 power engine",
+      description: "\nColors: Red, Yellow\nSpeed: 300m/h\nSeats: four\n300 power engine",
       image: 'https://cdn.autoportal.com/img/new-cars-gallery/mini/countryman/colors/8c33193ebc3041393005112badf5ccd1.jpg'
     },
     {
@@ -274,7 +274,7 @@ export const Products = [
       colors: [
         'White',
       ],
-      description: "Colors: White\nSpeed: 300m/h\nSeats: four\n300 power engine",
+      description: "\nColors: White\nSpeed: 300m/h\nSeats: four\n300 power engine",
       image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/toyota-gr-yaris-pr-122-1607959556.jpg?crop=1.00xw:0.334xh;0,0.587xh&resize=1200:*'
     },
     {
@@ -290,7 +290,7 @@ export const Products = [
       colors: [
         'Red',
       ],
-      description: "Colors: Red\nSpeed: 400m/h\nSeats: Two\n300 power engine\nSliding Door",
+      description: "\nColors: Red\nSpeed: 400m/h\nSeats: Two\n300 power engine\nSliding Door",
       image: 'https://cdn.hiconsumption.com/wp-content/uploads/2019/03/Best-Convertible-Cars-0-Hero-1087x725.jpg'
     }
   ]

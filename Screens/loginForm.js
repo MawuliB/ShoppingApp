@@ -1,7 +1,7 @@
 import Toast from 'react-native-toast-message'
 import { NavigationContainer } from '@react-navigation/native';
-import React, { Component } from 'react';
-import { useState } from 'react';
+import React, { Component, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert, Button, TextInput, View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,19 +12,17 @@ export default function Login ({navigation}) {
 
   const [username, setUsername] = useState('');
   
-const setData = (user) => {
-    const username = user;
-}
-
-const onLogin = () => {
-  Toast.show({
-    type: 'success',
-    text1: 'Welcome' + {username},
-    position: 'bottom',
-    visibilityTime: 5,
-    onPress: () => navigation.navigate('home')
-  });
-  navigation.navigate('home')
+const onLogin = async () => {
+  if (username.length == 0){
+    Alert.alert('Error', 'Enter Your Username')
+  } else {
+    try {
+      await AsyncStorage.setItem('UserName', username);
+      navigation.navigate('Drawer');
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 
@@ -33,13 +31,8 @@ const onLogin = () => {
             <View style={styles.box}>
         <TextInput
           style={styles.inputText}
-          onChangeText={setData}
+          onChangeText={(value)=>setUsername(value)}
           placeholder={'Username'}
-        />
-        <TextInput
-          style={styles.inputText}
-          placeholder={'Password'}
-          secureTextEntry={true}
         />
         <TouchableOpacity 
         style={styles.loginBtn} 

@@ -8,8 +8,8 @@ const { width, height } = Dimensions.get('window')
 const Details = ({navigation, route}) => {
     const Product = route.params;
   const ExtraImages = ({Images}) => {
-      <View style={{height: height / 4, borderRadius: 15}}>
-          <Image source={{uri: Images.extraImages}}/>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Image style={{height: height / 4, borderRadius: 15}} source={{uri: Images.extraImages}}/>
       </View>
   }
   const renderItem = ({ item }) => (
@@ -38,13 +38,14 @@ const Details = ({navigation, route}) => {
                 
                     <FlatList
                     data={Product}
-                    renderItem={renderItem}
+                    renderItem={renderItem} 
+                    keyExtractor={item => item.id}   
                     horizontal
                     scrollEnabled
                     />
                 
                 <View style={styles.title}>
-                    <Text style={styles.titleText} >Details: {Product.description}</Text>
+                    <Text style={styles.titleText} >Details {Product.description}</Text>
                 </View>
 
             </ScrollView>
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0.5, height: 0.5 },
         shadowOpacity: 0.5,
         shadowRadius: 3,
+        resizeMode: 'stretch'
     },
     button: {
         justifyContent: 'flex-start' ,

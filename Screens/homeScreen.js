@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, FlatList, TouchableOpacity, Pressable, Dimensions, StyleSheet, Image} from 'react-native';
-import { Button, Drawer, List, WhiteSpace } from '@ant-design/react-native';
+import { Button, List, WhiteSpace } from '@ant-design/react-native';
 import { Ionicons, FontAwesome, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import SafeAreaView from 'react-native-safe-area-context'
 
+
 import { NavigationContext, useNavigation } from '@react-navigation/native';
+import { Categories }  from '../Data/ProductData'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Items from "../components/Items";
+import DrawerNav from '../components/Drawer'
 
 const { width, height } = Dimensions.get('window')
-
-import { Categories }  from '../Data/ProductData'
 
 
 const Item = ({ Category }) => (
@@ -26,104 +28,21 @@ const renderItem = ({ item }) => (
 );
 
 
-export default class homeScreen extends React.Component {
-  
-  render() {
-    const itemArr = Array.apply(null, Array(5))
-      .map(function(_, i) {
-        return i;
-      })
-      .map((_i, index) => {
-        if (index === 0) {
-          return (
-            <List.Item
-              key={index}
 
-              style={{}}
-              multipleLine
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: 50,
-                  marginTop: 50,
+export default function HomeScreen ({navigation}) {
+  <DrawerNav/>
+
+//const Data = GetData();
 
 
-                }}
-              >
-                <Image style={{ height: 50, width: 50, borderRadius: 50 }} source={{uri: "https://scontent.facc8-1.fna.fbcdn.net/v/t1.6435-9/137227368_3572206719539558_5987327469211060924_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFTAlKB5hlclK1R6kQMPaIYcmNCF8lcws9yY0IXyVzCz9c2EhhFtffDF3brBYJkQuuGxIHeWkxovG1uJzc5gpIq&_nc_ohc=bu1_1pcnrmkAX_C8-8a&_nc_ht=scontent.facc8-1.fna&oh=3e216d7c7a4492c2d4e4a626183bca0c&oe=61A5B823"}} />
-                <Text style={{ fontSize: 20, marginLeft: 60, position: 'absolute' }}>Profile</Text>
-                <View style={{ alignItems: 'flex-end', }} >
-                <AntDesign name='closecircle' size={20} onPress={() => this.drawer.closeDrawer()}/>
-                </View>
-              </View>
-            </List.Item>
-          );
-        } else if (index === 1) {
-          return (
-            <List.Item
-              key={index}
-            >
-              <View style={{ flexDirection: 'row', }} > 
-                <AntDesign name='shoppingcart' size={20} />
-              <Text style={{marginLeft: 30, position: 'absolute'}} >Cart</Text>
-              </View>
-              
-            </List.Item>
-          );
-        }  else if (index === 2) {
-          return (
-            <List.Item
-              key={index}
-            >
-              <View style={{ flexDirection: 'row', }} > 
-              <MaterialIcons name='favorite' size={20} color={'red'} />
-              <Text style={{marginLeft: 30, position: 'absolute'}} >Favourite</Text>
-              </View>
-
-            </List.Item>
-          );
-        }  else if (index === 3) {
-          return (
-            <List.Item
-              key={index}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'flex-end', marginTop: width - 50}} > 
-                <AntDesign name='setting' size={20} />
-              <Text style={{marginLeft: 30, position: 'absolute'}} >Settings</Text>
-              </View>
-
-            </List.Item>
-          );
-        }
-
-      });
-    // Todo: https://github.com/DefinitelyTyped/DefinitelyTyped
-    const sidebar = (
-      <ScrollView style={[styles.container]}>
-        <List>{itemArr}</List>
-      </ScrollView>
-    );
-    
-    return (
-      <Drawer
-        sidebar={sidebar}
-        position="left"
-        open={false}
-        drawerRef={el => (this.drawer = el)}
-        onOpenChange={this.onOpenChange}
-        drawerBackgroundColor="white"
-        drawerWidth={width / 1.5}
-      >
+   return (
 <View
       style={styles.main}
     >
       <View
         style={styles.top}
       >
-        <Pressable onPress={() => this.drawer && this.drawer.openDrawer()}>
+        <Pressable onPress={() => navigation.openDrawer()}>
         <Ionicons name="ios-menu-outline" size={24} color="black">
         </Ionicons>
         </Pressable>
@@ -163,10 +82,9 @@ export default class homeScreen extends React.Component {
       <Items/>
       
     </View>
-    </Drawer>
 
     );
-  }
+
 }
 
 const styles = StyleSheet.create({
@@ -179,7 +97,6 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     paddingHorizontal: 20,
     justifyContent: "space-evenly",
-
   },
   top: {
     flexDirection: "row",

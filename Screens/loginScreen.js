@@ -33,7 +33,7 @@ export default function loginScreen(params) {
 
 <TouchableOpacity
         onPress={() => {
-          navigation.navigate("home");
+          navigation.navigate("Drawer");
         }}
         style={styles.login}
       >
@@ -46,7 +46,7 @@ export default function loginScreen(params) {
 
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("home");
+          navigation.navigate("Drawer");
         }}
         style={styles.login1}
       >

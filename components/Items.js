@@ -8,7 +8,7 @@ const { width, height } = Dimensions.get('window')
 import  { Products } from '../Data/ProductData'
 
  
-export default function Items({}) {
+export default function Items( ) {
   
 const navigation = useNavigation();
 
