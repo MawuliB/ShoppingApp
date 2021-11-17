@@ -31,6 +31,10 @@ export default class Cart extends Component {
     const show = () => {
         console.log(this.state)
     }
+
+    const remove = () => {
+        AsyncStorage.clear();
+    }
     return (
       <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}>
          <View style={{height:20}} />
@@ -55,7 +59,7 @@ export default class Cart extends Component {
                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                          <Text style={{fontWeight:'bold',color:"orange",fontSize:20}}>${item.price}</Text>
                          <View style={{flexDirection:'row', alignItems:'center', backgroundColor: 'grey', borderRadius: 5}}>
-                           <Text style={{fontWeight:'bold',color:"orange",fontSize:20, padding: 5}} >Remove</Text>
+                           <Text style={{fontWeight:'bold',color:"orange",fontSize:20, padding: 5}} onPress={remove}>Remove</Text>
                          </View>
                        </View>
                      </View>

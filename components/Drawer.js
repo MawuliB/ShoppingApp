@@ -56,7 +56,7 @@ function CustomDrawerContent(props) {
 
   return (
     <ScrollView style={styles.main} >
-        <TouchableOpacity style={styles.welcome}>
+        <TouchableOpacity style={styles.welcome} onPress={() => navigation.navigate('Home') }>
           <MaterialCommunityIcons name='face-profile' size={25} color={'red'}/>
           <Text style={ styles.welcomeText } >{`Good ${greet} `}</Text>
           <Text style={{ fontSize: 25, fontFamily: Platform.OS == 'android'? 'serif': 'arial', alignSelf: 'center' }}>{name}</Text>

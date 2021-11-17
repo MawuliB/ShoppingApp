@@ -372,7 +372,7 @@ const onPress = (item) => {
         </Pressable>
 
         <Pressable onPress={() => navigation.navigate("Home")} >
-        <FontAwesome name="motorcycle" size={24} color="black" />
+        <FontAwesome name="car" size={24} color="black" />
         </Pressable>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Pressable onPress={() => navigation.navigate('Cart', Products ) }>
