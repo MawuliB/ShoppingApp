@@ -3,10 +3,15 @@ import { StyleSheet, Text, View } from 'react-native'
 
 export default function Settings() {
     return (
-        <View>
-            <Text></Text>
-        </View>
+        <SafeAreaView>
+          <Text>Settings</Text>
+        </SafeAreaView>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  main: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
