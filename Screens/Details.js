@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Image, Text, StyleSheet, Dimensions, ScrollView, Pressable, Platform, FlatList, TouchableOpacity, TouchableHighlight} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, FontAwesome, AntDesign, MaterialIcons } from "@expo/vector-icons";
@@ -6,41 +6,145 @@ import { WhiteSpace } from '@ant-design/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const { width, height } = Dimensions.get('window')
 
+
 const Details = ({navigation, route}) => {
     const Product = route.params;
+    // const routeName = state.routeNames[2]
+    const [addCartTextPressed, setAddCartTextPressed] = useState(false)
+    const [savedItemId, setSavedItemID] = useState([])
 
-    const onClickAddCart = (data) => {
-        AsyncStorage.clear();
-        //console.log(AsyncStorage);
-    
-        const itemcart = {
-          title: data.title,
-          category:  data.categories,
-          price: data.price,
-          image: data.image,
-          id: data.id
+    const [cart, setCart] = useState([]);
+
+    const addToCart = async (item) => {
+        console.log('Adding');
+        const cartData = {
+            id: item.id,
+            title: item.title,
+            price: item.price,
+            image: item.image,
+            category: item.categories
+        };
+        try {
+            const status = AsyncStorage.getItem('CartData');
+            if (status === null) {
+                setCart([...cart, cartData]);
+                await AsyncStorage.setItem('CartData', JSON.stringify(cart))
+                console.log(cart);
+                console.log('Added');
+            }else {
+                const convert = JSON.stringify(status);
+                if (!convert.id) {
+                    setCart([...cart, cartData]);
+                    await AsyncStorage.setItem('CartData', JSON.stringify(cart))
+                    console.log(cart);
+                    console.log('Added');
+                }else{
+                    console.log('Already Added')
+                }
+            }
+        } catch (error) {
+            console.log("This is a Add to Cart Error: " + error);
         }
-        
-        AsyncStorage.getItem('cart').then((datacart)=>{
-            if (datacart !== null) {
-              // We have data!!
-              const cart = JSON.parse(datacart)
-              cart.push(itemcart)
-              AsyncStorage.setItem('cart',JSON.stringify(cart));
-              
+    }
+     
+      
+
+  /*    const save = () => {
+        if (!savedItemId.includes(Products.id)) {
+            setCart([...cart, Products])
+        }
+    }
+
+
+    const saveSavedItem = async () => {
+        setSavedItemID([...savedItemId, Products.id])
+        try {
+            await AsyncStorage.setItem("savedItem", JSON.stringify(savedItemId))
+        } catch(err) {
+            alert(err)
+        }
+    }
+
+    const loadSavedItem = async() => {
+        try {
+            let item = await AsyncStorage.getItem("savedItem")
+            item = JSON.parse(item)
+            if (item !== null) [
+                setSavedItemID(item)
+            ]
+        } catch(err) {
+            alert(err)
+        }
+    }
+
+    const saveToCart = async () => {
+        try {
+            if (addCartTextPressed === true) {
+                await AsyncStorage.setItem("MyCart", JSON.stringify(cart))
+                console.log(cart);
             }
-            else{
-              const cart  = []
-              cart.push(itemcart)
-              AsyncStorage.setItem('cart',JSON.stringify(cart));
-              
+        }catch(err) {
+            alert(err)
+        }
+    }
+
+    const loadCart = async () => {
+        try{
+            let cart = await AsyncStorage.getItem("MyCart")
+            cart = JSON.parse(cart)
+            if (cart !== null) {
+                setCart(cart)
             }
-            //alert("Add Cart")
-          })
-          .catch((err)=>{
-            //alert(err)
-          })
+        }catch(err) {
+            alert(err)
+        }
+    }
+
+    const clearCart = async() => {
+        try {
+            await AsyncStorage.removeItem("MyCart")
+        } catch(e) {
+            alert(e)
+        } finally {
+            setCart([])
+        }
+    }
+
+    const clearSaved = async() => {
+        try {
+            await AsyncStorage.removeItem("savedItem")
+        } catch(e) {
+            alert(e)
+        } finally {
+            setCart([])
+        }
+    }
+
+    useEffect(() =>{
+        loadCart()
+        loadSavedItem()
+    }, [])
+
+
+
+    const renderCorrectAddItemFunction = () => {
+      setAddCartTextPressed(true)
+      if (savedItemId.includes(Products.id)) {
+          navigation.navigate('Cart', {Products, cart})
       }
+  }
+
+  const renderCorrectText = () => {
+      if (addCartTextPressed === true || savedItemId.includes(Products.id)) {
+          return (
+              <Text>go to cart</Text>
+          )
+      } else {
+          return (
+              <Text>Add To Cart</Text>
+          )
+      }
+  }*/
 
   const ExtraImages = ({Images}) => {
       const img = Images.extraImages;
@@ -88,7 +192,7 @@ const Details = ({navigation, route}) => {
 <WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/><WhiteSpace/>
                 </View>
             </ScrollView>
-                <TouchableOpacity style={styles.addContainer} onPress={() => onClickAddCart(Product) } >
+                <TouchableOpacity style={styles.addContainer} onPress={() => addToCart(Product)} >
                     <Text style={styles.add}>ADD TO CART</Text>
                 </TouchableOpacity>
         </SafeAreaView>
@@ -169,4 +273,4 @@ const styles = StyleSheet.create({
         }
 })
 
-export default Details;
+export default Details ;

@@ -15,6 +15,9 @@ import HomeScreen from '../Screens/homeScreen'
 import Cart from '../Screens/Cart'
 import Favourite from '../Screens/Favourite'
 import Settings from '../Screens/Settings'
+import Details from '../Screens/Details';
+import Pcart from '../Screens/Pcart';
+import { Products } from '../Data/ProductData';
 
 const { width, height } = Dimensions.get('window')
 const Drawer = createDrawerNavigator();
@@ -61,7 +64,7 @@ function CustomDrawerContent(props) {
           <Text style={ styles.welcomeText } >{`Good ${greet} `}</Text>
           <Text style={{ fontSize: 25, fontFamily: Platform.OS == 'android'? 'serif': 'arial', alignSelf: 'center' }}>{name}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.cart} onPress={() => navigation.navigate('Cart') }>
+        <TouchableOpacity style={styles.cart} onPress={() => navigation.navigate('Cart', Products) }>
           <AntDesign name='shoppingcart' size={20} />
           <Text style={styles.text} >Cart</Text>
         </TouchableOpacity>
@@ -94,11 +97,13 @@ export default function DrawerNav() {
     }} initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeScreen} options={{headerShown: false}}      
     />
-        <Drawer.Screen name="Cart" component={Cart} options={{headerShown: false, drawerLabel: () => null, title: null, drawerIcon: () => null}}
+        <Drawer.Screen name="Cart" component={Pcart} options={{headerShown: false, drawerLabel: () => null, title: null, drawerIcon: () => null}}
     />
         <Drawer.Screen name="Favourite" component={Favourite} options={{headerShown: false, drawerLabel: () => null, title: null, drawerIcon: () => null}}
     />
         <Drawer.Screen name="Settings" component={Settings} options={{headerShown: false, drawerLabel: () => null, title: null, drawerIcon: () => null}}
+    />
+        <Drawer.Screen name="Details" component={Details} options={{headerShown: false, drawerLabel: () => null, title: null, drawerIcon: () => null}}
     />
     </Drawer.Navigator>
     )

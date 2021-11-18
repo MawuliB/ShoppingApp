@@ -7,17 +7,27 @@ import SafeAreaView from 'react-native-safe-area-context'
 import { NavigationContext, useNavigation } from '@react-navigation/native';
 import { Categories, Products, Convertible, Coupe, Hatchback, Sedan, Sport, Station }  from '../Data/ProductData'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useNotes } from '../components/Provider'
 
 const { width, height } = Dimensions.get('window')
 
 
 export default function HomeScreen ({navigation}) {
 
-  //const routeName = state.routeNames[2]
-  const [addCartTextPressed, setAddCartTextPressed] = useState(false)
+  /*const { notes, setNotes, findNotes } = useState([]);
+  const handleOnSubmit = async (prod) => {
+    
+    let id = prod.id;
+    let title = prod.title;
+    let  desc = prod.description;
+
+    const note = { id: id, title, desc };
+    const updatedNotes = [...notes, note];
+    setNotes(updatedNotes);
+    await AsyncStorage.setItem('notes', JSON.stringify(updatedNotes));
+  };
+
     const [cart, setCart] = useState([])
-    const [savedItemId, setSavedItemID] = useState([])
 
     const addtoCart = (product) => {
       setCart([...cart, product]);
@@ -39,103 +49,6 @@ export default function HomeScreen ({navigation}) {
     }
     }
 
-
-    const save = () => {
-        if (!savedItemId.includes(Products.id)) {
-            setCart([...cart, Products])
-        }
-    }
-
-
-    const saveSavedItem = async () => {
-        setSavedItemID([...savedItemId, Products.id])
-        try {
-            await AsyncStorage.setItem("savedItem", JSON.stringify(savedItemId))
-        } catch(err) {
-            alert(err)
-        }
-    }
-
-    const loadSavedItem = async() => {
-        try {
-            let item = await AsyncStorage.getItem("savedItem")
-            item = JSON.parse(item)
-            if (item !== null) [
-                setSavedItemID(item)
-            ]
-        } catch(err) {
-            alert(err)
-        }
-    }
-
-    const saveToCart = async () => {
-        try {
-            if (addCartTextPressed === true) {
-                await AsyncStorage.setItem("MyCart", JSON.stringify(cart))
-                console.log(cart);
-            }
-        }catch(err) {
-            alert(err)
-        }
-    }
-
-    const loadCart = async () => {
-        try{
-            let cart = await AsyncStorage.getItem("MyCart")
-            cart = JSON.parse(cart)
-            if (cart !== null) {
-                setCart(cart)
-            }
-        }catch(err) {
-            alert(err)
-        }
-    }
-
-    const clearCart = async() => {
-        try {
-            await AsyncStorage.removeItem("MyCart")
-        } catch(e) {
-            alert(e)
-        } finally {
-            setCart([])
-        }
-    }
-
-    const clearSaved = async() => {
-        try {
-            await AsyncStorage.removeItem("savedItem")
-        } catch(e) {
-            alert(e)
-        } finally {
-            setCart([])
-        }
-    }
-
-    useEffect(() =>{
-        loadCart()
-        loadSavedItem()
-    }, [])
-
-
-
-    const renderCorrectAddItemFunction = () => {
-      setAddCartTextPressed(true)
-      if (savedItemId.includes(Products.id)) {
-          navigation.navigate('Cart', {Products, cart})
-      }
-  }
-
-  const renderCorrectText = () => {
-      if (addCartTextPressed === true || savedItemId.includes(Products.id)) {
-          return (
-              <Text>go to cart</Text>
-          )
-      } else {
-          return (
-              <Text>Add To Cart</Text>
-          )
-      }
-  }
 
   const saveData = ({item}) => {
     console.log("We are in SAve function")
@@ -171,7 +84,10 @@ export default function HomeScreen ({navigation}) {
         alert(error)
     }
     
-    }
+    }*/
+
+    const { products } = Products;
+    const [cartItems, setCartItems] = useState([]);
 
 
 const [catergoryIndex, setCategoryIndex] = React.useState(1);
@@ -345,7 +261,7 @@ const onPress = (item) => {
                   <Text style={styles.name}>{item.title}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.addContainer} onPress={() => addtoCart(item)}>
+          <TouchableOpacity style={styles.addContainer} onPress={() => handleOnSubmit({item})}>
             <Text style={styles.add}>ADD TO CART</Text>
           </TouchableOpacity>
 
@@ -375,7 +291,7 @@ const onPress = (item) => {
         <FontAwesome name="car" size={24} color="black" />
         </Pressable>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Pressable onPress={() => navigation.navigate('Cart', Products ) }>
+          <Pressable onPress={() => navigation.navigate('Cart', products ) }>
             <AntDesign name='shoppingcart' size={20} color={'black'}/>
           </Pressable>
         </View>
