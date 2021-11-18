@@ -13,11 +13,11 @@ const Details = ({navigation, route}) => {
     const [addCartTextPressed, setAddCartTextPressed] = useState(false)
     const [savedItemId, setSavedItemID] = useState([])
 
-    const [cart, setCart] = useState([]);
+    let [cart, setCart] = useState([]);
 
     const addToCart = async (item) => {
         console.log('Adding');
-        const cartData = {
+        let cartData = {
             id: item.id,
             title: item.title,
             price: item.price,
@@ -25,21 +25,21 @@ const Details = ({navigation, route}) => {
             category: item.categories
         };
         try {
-            const status = AsyncStorage.getItem('CartData');
+            let get = await AsyncStorage.getItem('CartData');
+            let status = JSON.parse(get);
             if (status === null) {
                 setCart([...cart, cartData]);
                 await AsyncStorage.setItem('CartData', JSON.stringify(cart))
                 console.log(cart);
                 console.log('Added');
             }else {
-                const convert = JSON.stringify(status);
-                if (!convert.id) {
+                if (cartData.id == status.id) {
+                    console.log('Already Added')        
+                }else{
                     setCart([...cart, cartData]);
                     await AsyncStorage.setItem('CartData', JSON.stringify(cart))
                     console.log(cart);
                     console.log('Added');
-                }else{
-                    console.log('Already Added')
                 }
             }
         } catch (error) {
@@ -48,104 +48,6 @@ const Details = ({navigation, route}) => {
     }
      
       
-
-  /*    const save = () => {
-        if (!savedItemId.includes(Products.id)) {
-            setCart([...cart, Products])
-        }
-    }
-
-
-    const saveSavedItem = async () => {
-        setSavedItemID([...savedItemId, Products.id])
-        try {
-            await AsyncStorage.setItem("savedItem", JSON.stringify(savedItemId))
-        } catch(err) {
-            alert(err)
-        }
-    }
-
-    const loadSavedItem = async() => {
-        try {
-            let item = await AsyncStorage.getItem("savedItem")
-            item = JSON.parse(item)
-            if (item !== null) [
-                setSavedItemID(item)
-            ]
-        } catch(err) {
-            alert(err)
-        }
-    }
-
-    const saveToCart = async () => {
-        try {
-            if (addCartTextPressed === true) {
-                await AsyncStorage.setItem("MyCart", JSON.stringify(cart))
-                console.log(cart);
-            }
-        }catch(err) {
-            alert(err)
-        }
-    }
-
-    const loadCart = async () => {
-        try{
-            let cart = await AsyncStorage.getItem("MyCart")
-            cart = JSON.parse(cart)
-            if (cart !== null) {
-                setCart(cart)
-            }
-        }catch(err) {
-            alert(err)
-        }
-    }
-
-    const clearCart = async() => {
-        try {
-            await AsyncStorage.removeItem("MyCart")
-        } catch(e) {
-            alert(e)
-        } finally {
-            setCart([])
-        }
-    }
-
-    const clearSaved = async() => {
-        try {
-            await AsyncStorage.removeItem("savedItem")
-        } catch(e) {
-            alert(e)
-        } finally {
-            setCart([])
-        }
-    }
-
-    useEffect(() =>{
-        loadCart()
-        loadSavedItem()
-    }, [])
-
-
-
-    const renderCorrectAddItemFunction = () => {
-      setAddCartTextPressed(true)
-      if (savedItemId.includes(Products.id)) {
-          navigation.navigate('Cart', {Products, cart})
-      }
-  }
-
-  const renderCorrectText = () => {
-      if (addCartTextPressed === true || savedItemId.includes(Products.id)) {
-          return (
-              <Text>go to cart</Text>
-          )
-      } else {
-          return (
-              <Text>Add To Cart</Text>
-          )
-      }
-  }*/
-
   const ExtraImages = ({Images}) => {
       const img = Images.extraImages;
       <View style={{justifyContent: 'center', alignItems: 'center'}}>

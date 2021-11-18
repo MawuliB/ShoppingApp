@@ -7,84 +7,46 @@ import SafeAreaView from 'react-native-safe-area-context'
 import { NavigationContext, useNavigation } from '@react-navigation/native';
 import { Categories, Products, Convertible, Coupe, Hatchback, Sedan, Sport, Station }  from '../Data/ProductData'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNotes } from '../components/Provider'
+
 
 const { width, height } = Dimensions.get('window')
 
 
 export default function HomeScreen ({navigation}) {
 
-  /*const { notes, setNotes, findNotes } = useState([]);
-  const handleOnSubmit = async (prod) => {
-    
-    let id = prod.id;
-    let title = prod.title;
-    let  desc = prod.description;
+    let [cart, setCart] = useState([]);
 
-    const note = { id: id, title, desc };
-    const updatedNotes = [...notes, note];
-    setNotes(updatedNotes);
-    await AsyncStorage.setItem('notes', JSON.stringify(updatedNotes));
-  };
-
-    const [cart, setCart] = useState([])
-
-    const addtoCart = (product) => {
-      setCart([...cart, product]);
-      console.log(cart);
-      try {
-        const datacart = AsyncStorage.getItem('cart');
-        if (datacart == null) {
-           const cart = JSON.parse(datacart)
-           cart.push(product)
-           AsyncStorage.setItem('cart',JSON.stringify(cart));
-        }else{
-           const cart  = []
-           cart.push(product)
-           AsyncStorage.setItem('cart',JSON.stringify(cart));
-           
-         }
-    } catch (error) {
-        console.log(error);
+    const addToCart = async (item) => {
+        console.log('Adding');
+        const cartData = {
+            id: item.id,
+            title: item.title,
+            price: item.price,
+            image: item.image,
+            category: item.categories
+        };
+        try {
+            const status = AsyncStorage.getItem('CartData');
+            if (status === null) {
+                setCart([...cart, cartData]);
+                await AsyncStorage.setItem('CartData', JSON.stringify(cart))
+                console.log(cart);
+                console.log('Added');
+            }else {
+                const convert = JSON.stringify(status);
+                if (!convert.id) {
+                    setCart([...cart, cartData]);
+                    await AsyncStorage.setItem('CartData', JSON.stringify(cart))
+                    console.log(cart);
+                    console.log('Added');
+                }else{
+                    console.log('Already Added')
+                }
+            }
+        } catch (error) {
+            console.log("This is a Add to Cart Error: " + error);
+        }
     }
-    }
-
-
-  const saveData = ({item}) => {
-    console.log("We are in SAve function")
-    
-    try{
-    var product= [];
-    
-    var items={
-        id: item.id,
-        title: item.title,
-        image: item.image,
-        price: item.price,
-        description:item.description,
-        categoryTitle: item.categories,
-      }
-    
-         AsyncStorage.getItem("Cart",(err,res)=>{
-         if(!res){
-        
-         AsyncStorage.setItem("Cart",JSON.stringify([product]))
-         }
-         else{
-         product.push(items);          
-         AsyncStorage.setItem("Cart",JSON.stringify(product),
-         console.log("item added" + JSON.stringify(product)));
-         
-    
-      }
-      })
-    }
-    catch(error)
-    {
-        alert(error)
-    }
-    
-    }*/
 
     const { products } = Products;
     const [cartItems, setCartItems] = useState([]);
@@ -261,7 +223,7 @@ const onPress = (item) => {
                   <Text style={styles.name}>{item.title}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.addContainer} onPress={() => handleOnSubmit({item})}>
+          <TouchableOpacity style={styles.addContainer} onPress={() => addToCart(item) }>
             <Text style={styles.add}>ADD TO CART</Text>
           </TouchableOpacity>
 

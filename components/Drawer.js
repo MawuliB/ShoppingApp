@@ -12,7 +12,7 @@ import {
 } from '@react-navigation/drawer';
 
 import HomeScreen from '../Screens/homeScreen'
-import Cart from '../Screens/Cart'
+//import Cart from '../Screens/Cart'
 import Favourite from '../Screens/Favourite'
 import Settings from '../Screens/Settings'
 import Details from '../Screens/Details';
